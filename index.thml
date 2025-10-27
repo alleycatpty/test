@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAS POST Test</title>
+</head>
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;">
+  <button id="sendBtn" style="padding:10px 20px;font-size:16px;">送出測試資料</button>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxyhrlDU5xYdx1xQM-tUhrdFISJ8imUiDrtboy8wsH1IjJdZAvZd83pmdi_doMSPXmZmw/exec";
+
+    document.getElementById('sendBtn').addEventListener('click', async () => {
+      const testData = {
+        name: "John Doe",
+        phone: "0412345678",
+        email: "john@example.com",
+        date: "2025-10-27",
+        time: "18:30",
+        people: 2,
+        note: "測試資料"
+      };
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(testData)
+        });
+
+        const result = await response.json();
+        console.log("回傳結果:", result);
+        alert(result.msg || "完成");
+      } catch (err) {
+        console.error("送出錯誤:", err);
+        alert("送出失敗，請看 console");
+      }
+    });
+  </script>
+</body>
+</html>
